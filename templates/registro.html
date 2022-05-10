@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Registro | FilmLobby</title>
+</head>
+<body class="flex justify-center items-center flex-col h-screen font-['Montserrat']">
+    <div class="bg-base-200 rounded-xl shadow-xl relative overflow-hidden w-[768px] max-w-full min-h-[480px]">
+        <div class="absolute top-0 left-2/4 w-2/4 h-full">
+			<form action="/registro" method="POST" class="flex items-center justify-center flex-col px-12 h-full text-center">
+				<h1 class="font-bold text-2xl mb-5">Registro</h1>
+                {% with errores = get_flashed_messages(category_filter=["alias_error"]) %}
+				{% if errores %}
+                    <label class="text-[0.75rem] text-red-500">{{ errores[0] }}</label>
+                {% endif %}
+                {% endwith %}
+				<input type="text" placeholder="Alias" name="alias" class="input input-primary mb-5 w-full"/>
+                {% with errores = get_flashed_messages(category_filter=["email_error"]) %}
+				{% if errores %}
+                    <label class="text-[0.75rem] text-red-500">{{ errores[0] }}</label>
+                {% endif %}
+                {% endwith %}
+				<input type="email" placeholder="Email" name="email" class="input input-primary mb-5 w-full"/>
+                {% with errores = get_flashed_messages(category_filter=["password_error"]) %}
+				{% if errores %}
+                    <label class="text-[0.75rem] text-red-500">{{ errores[0] }}</label>
+                {% endif %}
+                {% endwith %}
+                <input type="password" placeholder="Contraseña" name="password" class="input input-primary mb-5 w-full"/>
+				<span class="text-[15px]">¿Ya tienes cuenta? <a href="/login" class="link">Inicia sesión</a></span>
+				<button class="btn btn-primary my-7">Registrarse</button>
+				<a href="/" class="link">Volver al inicio</a>
+			</form>
+		</div>
+		<div class="absolute top-0 left-0 h-full w-2/4 z-[2]">
+			<div class="relative left-[-100%] h-full w-[200%] bg-neutral text-white">
+				<div class="absolute flex items-center justify-center flex-col px-10 text-center top-0 right-0 h-full w-2/4">
+					<h1 class="font-bold text-2xl mb-5 text-primary">FilmLobby</h1>
+					<p>Create una cuenta y empieza a gestionar tus películas.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

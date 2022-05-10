@@ -1,0 +1,107 @@
+{% extends "plantilla.html" %}
+
+{% block head %}
+    <title>{{ pelicula.nombre }} | ALS</title>
+{% endblock %}
+
+{% block content %}
+    <article class="card shadow-2xl max-w-none m-10 bg-base-200">
+			<div class="card-body">
+				<h1 class="font-bold text-2xl m-auto">{{ pelicula.nombre }}</h1>
+				<em class="m-auto">{{ pelicula.director }}</em>
+				<div class="divider w-72 my-1 mx-auto"></div>
+				<figure class="my-3 mx-0">
+					<img class="max-w-2xl m-auto rounded-xl" width="200" height="280" src="{{ url_for('static', filename='img/img.jpg') }}" alt="img">
+				</figure>
+				<div class="flex flex-col mt-2 items-start m-auto">
+					<p class="max-w-5xl mb-3">{{ pelicula.descripcion }}</p>
+					<p><span class="font-bold">Año:</span> {{ pelicula.anho }}</p>
+					<p><span class="font-bold">Pais:</span> {{ pelicula.pais }}</p>
+					<p><span class="font-bold">Valoración:</span> {{ valoracion_global }}/5</p>
+                    {% if usuario %}
+					<form action="/milista" method="POST">
+						<input type="hidden" name="id_pelicula" value="{{ pelicula.id }}"/>
+						{% if not guardada %}
+							<button class="btn btn-primary gap-2 my-5">
+                                Guardar
+                                <svg class="h-6 w-6 fill-black stroke-black" viewBox="0 0 20 20">
+                                    <path fill="none" d="M16.85,7.275l-3.967-0.577l-1.773-3.593c-0.208-0.423-0.639-0.69-1.11-0.69s-0.902,0.267-1.11,0.69L7.116,6.699L3.148,7.275c-0.466,0.068-0.854,0.394-1,0.842c-0.145,0.448-0.023,0.941,0.314,1.27l2.871,2.799l-0.677,3.951c-0.08,0.464,0.112,0.934,0.493,1.211c0.217,0.156,0.472,0.236,0.728,0.236c0.197,0,0.396-0.048,0.577-0.143l3.547-1.864l3.548,1.864c0.18,0.095,0.381,0.143,0.576,0.143c0.256,0,0.512-0.08,0.729-0.236c0.381-0.277,0.572-0.747,0.492-1.211l-0.678-3.951l2.871-2.799c0.338-0.329,0.459-0.821,0.314-1.27C17.705,7.669,17.316,7.343,16.85,7.275z M13.336,11.754l0.787,4.591l-4.124-2.167l-4.124,2.167l0.788-4.591L3.326,8.5l4.612-0.67l2.062-4.177l2.062,4.177l4.613,0.67L13.336,11.754z"></path>
+                                </svg>
+							</button>
+							{% else %}
+							<button class="btn btn-primary gap-2 my-5">
+								Quitar de mi lista
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bookmark-check" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+									<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+								</svg>
+							</button>
+                            {% endif %}
+                            </form>
+                    {% endif %}
+				</div>
+				<div>
+                    {% if usuario %}
+                    {% if valoracion %}
+                    <span class="mt-5 font-bold">Tu puntuación es: {{ valoracion }}/5</span>
+                    {% else %}
+					<span class="mt-5 font-bold">Danos tu puntuación:</span>
+					<div class="rating ml-4">
+						<form action="/valorar" method="POST">
+                            <input type="hidden" name="id_pelicula" value="{{ pelicula.id }}"/>
+							<input type="radio" name="valoracion" value="1" class="mask mask-star-2 bg-neutral">
+							<input type="radio" name="valoracion" value="2" class="mask mask-star-2 bg-neutral">
+							<input type="radio" name="valoracion" value="3" class="mask mask-star-2 bg-neutral" checked>
+							<input type="radio" name="valoracion" value="4" class="mask mask-star-2 bg-neutral">
+							<input type="radio" name="valoracion" value="5" class="mask mask-star-2 bg-neutral">
+							<button class="btn btn-primary btn-outline btn-sm ml-5">Puntuar</button>
+						</form>
+					</div>
+                    {% endif %}
+                    {% endif %}
+				</div>
+				<div class="mt-10">
+					<div class="font-bold">Comentarios:</div>
+                    {% if comentarios %}
+                    {% for comentario in comentarios %}
+                        <div class="card card-compact mt-5 shadow-md bg-base-300">
+                            <div class="card-body">
+                                <div class="text-base">{{ comentario.alias_usuario }} dice:</div>
+                                <div class="divider m-0"></div>
+                                {{ comentario.comentario }}
+                            </div>
+					    </div>
+                    {% endfor %}
+                    {% else %}
+                        <div class="card card-compact mt-5 shadow-md bg-base-300">
+                            <div class="card-body">
+                                <div class="text-base">No hay comentarios por el momento</div>
+                            </div>
+					    </div>
+
+                    {% endif %}
+                    {% if usuario %}
+					<div class="card card-compact mt-5 shadow-md bg-base-300">
+						<div class="card-body">
+							<div class="text-base font-bold">Escribe tu comentario:</div>
+							<div class="divider m-0"></div>
+							<form class="flex flex-col gap-3" action="/comentar" method="POST">
+								<input type="hidden" name="id_pelicula" value="{{ pelicula.id }}"/>
+                                <label for="nombre">Nombre:</label>
+								<input type="text" class="input w-72" value="{{ usuario.alias }}" name="nombre" id="nombre" disabled>
+								<label for="comentario">Comentario:</label>
+								<textarea name="comentario" class="textarea w-96" placeholder="Comentario"></textarea>
+								{% with errores = get_flashed_messages() %}
+				                {% if errores %}
+                                 <label class="text-[0.75rem] text-red-500">{{ errores[0] }}</label>
+                                {% endif %}
+                                {% endwith %}
+                                <button class="btn btn-primary w-28 mt-6">Enviar</button>
+							</form>
+						</div>
+					</div>
+                    {% endif %}
+				</div>
+			</div>
+		</article>
+{% endblock %}

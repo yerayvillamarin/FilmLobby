@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body class="h-screen flex flex-col justify-between font-['Montserrat']">
+
+    <header class="navbar navbar-center bg-neutral shadow-xl rounded-box m-3 w-auto">
+
+        <div class="navbar-start">
+            <a href="/" class="btn btn-ghost normal-case text-xl text-primary">FilmLobby</a>
+            <div class="ml-5">
+                <a href="/" class="btn btn-ghost text-white">Inicio</a>
+                {% if usuario %}
+                <a href="/milista" class="btn btn-ghost text-white">Mi lista</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            {% if usuario %}
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 mask mask-squircle">
+                    <img src="https://api.lorem.space/image/face?hash=33791" />
+                  </div>
+                </label>
+                <ul tabindex="0" class="mt-3 p-2 shadow-lg menu menu-compact dropdown-content bg-neutral text-white rounded-box w-52">
+                  <li><a>Hola, {{ usuario.alias }}</a></li>
+                  <li><a href="/logout">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+            {% else %}
+                <a href="/login" class="btn btn-ghost text-white">Iniciar Sesión</a>
+            {% endif %}
+        </div>
+
+    </header>
+
+    <main class="flex-auto mx-10 my-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer items-center p-5 bg-neutral text-white mt-3">
+      <div class="items-center grid-flow-col">
+        <p class="font-bold"><span class="text-primary">FilmLobby</span> | Yeray Villamarín Osorio</p>
+      </div>
+      <div class="justify-self-end">
+        <p class="font-bold">Aplicaciones con Lenguajes de Script | 2022</p>
+      </div>
+    </footer>
+
+</body>
+
+</html>

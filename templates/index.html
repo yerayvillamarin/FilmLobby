@@ -1,0 +1,24 @@
+{% extends "plantilla.html" %}
+
+{% block head %}
+    <title>FilmLobby | ALS</title>
+{% endblock %}
+
+{% block content %}
+    {% if peliculas %}
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
+    {% for pelicula in peliculas %}
+        <div class="card card-side bg-base-200 shadow-xl max-w-lg">
+          <figure><img class="w-[145px] h-[220px]" src="{{ url_for('static', filename='img/img.jpg') }}" alt="Movie"></figure>
+          <div class="card-body">
+            <h2 class="card-title">{{ pelicula.nombre }}</h2>
+            <p>Haz click para ver mas detalles de la pelicula</p>
+            <div class="card-actions justify-end">
+              <a href="/pelicula/{{ pelicula.id }}" class="btn btn-primary">Ver mas...</a>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Login | FilmLobby</title>
+</head>
+<body class="flex justify-center items-center flex-col h-screen font-['Montserrat']">
+    <div class="bg-base-200 rounded-xl shadow-xl relative overflow-hidden w-[768px] max-w-full min-h-[480px]">
+		<div class="absolute top-0 left-0 h-full w-2/4 z-[2] bg-base-200">
+			<form action="/login" method="POST" class="flex items-center justify-center flex-col px-12 h-full text-center">
+				<h1 class="font-bold text-2xl mb-5">Iniciar Sesión</h1>
+                {% with errores = get_flashed_messages() %}
+                {% if errores %}
+				<div class="alert alert-error mb-5">
+					<div>
+					  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 mx-1 stroke-current">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+					  </svg>
+					  <label>{{ errores[0] }}<br></label>
+					</div>
+				  </div>
+                {% endif %}
+                {% endwith %}
+				<input type="text" placeholder="Alias" name="alias" class="input input-primary mb-5 w-full"/>
+				<input type="password" placeholder="Contraseña" name="password" class="input input-primary mb-5 w-full"/>
+				<span class="text-[15px]">¿No tienes cuenta? Registrate <a href="/registro" class="link">aquí</a></span>
+				<button class="btn btn-primary my-7">Entrar</button>
+				<a href="/" class="link">Volver al inicio</a>
+			</form>			
+		</div>
+		<div class="absolute top-0 left-2/4 w-2/4 h-full">
+			<div class="relative left-[-100%] h-full w-[200%] bg-neutral text-white">
+				<div class="absolute flex items-center justify-center flex-col px-10 text-center top-0 right-0 h-full w-2/4">
+					<h1 class="font-bold text-2xl mb-5 text-primary">FilmLobby</h1>
+					<p>Inicia sesión en la web para poder guardar y comentar tus películas.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
