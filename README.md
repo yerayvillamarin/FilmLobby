@@ -11,6 +11,7 @@ Este método se puede ejecutar en la ruta ___/cargar-datos___
 http://dominio/cargar-datos
 ```
 Esto creará 3 películas, en una de ellas se agregaran comentarios y puntuaciones.
+
 También creará el usuario admin/admin
 
 
@@ -24,4 +25,5 @@ También creará el usuario admin/admin
 
 ## Funcionamiento
 La Base de Datos Redis debe de estar escuchando en localhost:6379
+
 Las pruebas se han realizado desde el servidor web de PyCharm
