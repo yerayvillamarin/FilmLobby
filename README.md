@@ -10,7 +10,7 @@ Este método se puede ejecutar en la ruta ___/cargar-datos___
 ```
 http://dominio/cargar-datos
 ```
-Esto creará 3 películas, en una de ellas se agregaran comentarios y puntuaciones.
+Esto creará 3 películas, en una de ellas se agregarán comentarios y puntuaciones.
 
 También creará el usuario admin/admin
 

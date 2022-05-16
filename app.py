@@ -53,6 +53,7 @@ def cargar_datos():
 
     return flask.redirect("/")
 
+
 @app.route('/')
 def index():
 
@@ -61,6 +62,7 @@ def index():
         "peliculas": None if len(list(PeliculaModelo.get_peliculas(sirope))) == 0 else PeliculaModelo.get_peliculas(sirope)
     }
     return flask.render_template("index.html", **datos_front)
+
 
 @app.route('/milista', methods=['POST', 'GET'])
 def milista():
